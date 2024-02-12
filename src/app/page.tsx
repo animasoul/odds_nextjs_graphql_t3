@@ -6,11 +6,13 @@ import type { QueryData } from "~/app/_types/post";
 
 export const dynamic = "force-dynamic";
 
+export const revalidate = 100;
+
 import { useSuspenseQuery } from "@apollo/experimental-nextjs-app-support/ssr";
 import { gql } from "@apollo/client";
 
 const query = gql`
-  query getAllPostsByCategorySlug @cached {
+  query getPosts @cached {
     wplf_posts(
       where: { post_status: { _eq: "publish" }, post_type: { _eq: "post" } }
       order_by: { post_modified: desc }
@@ -78,6 +80,7 @@ function Showcase() {
   const { data } = useSuspenseQuery<QueryData>(query, {
     context: { fetchOptions: { cache: "force-cache" } },
   });
+  // const { data } = useSuspenseQuery<QueryData>(query);
 
   const unescapeHTML = (str: string) =>
     str
@@ -112,23 +115,22 @@ function Showcase() {
               <p className={styles.showcaseText}>
                 User: {post.user.display_name}
               </p>
-              {/* Iterate through post_meta for thumbnails as an example */}
               {post.post_meta.map((meta, index) => (
                 <div key={index}>
                   <p className={styles.showcaseText}>
                     Thumbnail ID: {meta.meta_value}
                   </p>
-                  {meta.attached.map((attach, attachIndex) => (
-                    <div key={attachIndex} className={styles.imagefit}>
-                      <img
-                        src={attach.guid}
-                        alt={
-                          attach.post_meta.find((meta) => meta.meta_value)
-                            ?.meta_value ?? "Post thumbnail"
-                        }
-                      />
-                    </div>
-                  ))}
+                  {/* Since `attached` is an object, you don't need to map over it */}
+                  <div className={styles.imagefit}>
+                    <img
+                      src={meta.attached.guid}
+                      alt={
+                        meta.attached.post_meta.find(
+                          (metaItem) => metaItem.meta_value
+                        )?.meta_value ?? "Post thumbnail"
+                      }
+                    />
+                  </div>
                 </div>
               ))}
             </div>

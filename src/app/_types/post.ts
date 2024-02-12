@@ -17,10 +17,11 @@ export type UserMeta = {
 export type User = {
   user_url: string;
   display_name: string;
-  ID: number;
+  ID: number; // Assuming ID is a number based on your context
   user_meta: UserMeta[];
 };
 
+// Adjust PostMeta to reflect that 'attached' is an object, not an array
 export type PostMeta = {
   meta_value: string;
   attached: {
@@ -30,17 +31,17 @@ export type PostMeta = {
     post_excerpt: string;
     post_meta: {
       meta_value: string;
-    }[];
-  }[];
+    }[]; // Assuming post_meta is an array of objects with a 'meta_value' property
+  };
 };
 
 export type Post = {
   __typename: "wplf_posts";
-  ID: number; // Changed from bigint to number for simplicity
+  ID: number;
   post_name: string;
   post_title: string;
-  post_date: string; // Changed from Date to string to match your GraphQL result directly
-  post_modified: string; // Same as above
+  post_date: string; // Keeping as string to directly match the GraphQL result
+  post_modified: string;
   post_content: string;
   term_relationships: TermRelationship[];
   user: User;
