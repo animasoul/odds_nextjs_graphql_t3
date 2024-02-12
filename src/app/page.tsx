@@ -77,10 +77,10 @@ export default function Home() {
 }
 
 function Showcase() {
-  const { data } = useSuspenseQuery<QueryData>(query, {
-    context: { fetchOptions: { cache: "force-cache" } },
-  });
-  // const { data } = useSuspenseQuery<QueryData>(query);
+  // const { data } = useSuspenseQuery<QueryData>(query, {
+  //   context: { fetchOptions: { cache: "force-cache" } },
+  // });
+  const { data } = useSuspenseQuery<QueryData>(query);
 
   const unescapeHTML = (str: string) =>
     str
