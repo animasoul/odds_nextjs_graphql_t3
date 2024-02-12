@@ -1,23 +1,52 @@
+export type Term = {
+  name: string;
+};
+
+export type TermTaxonomy = {
+  terms: Term[];
+};
+
+export type TermRelationship = {
+  term_taxonomy: TermTaxonomy;
+};
+
+export type UserMeta = {
+  meta_value: string;
+};
+
+export type User = {
+  user_url: string;
+  display_name: string;
+  ID: number;
+  user_meta: UserMeta[];
+};
+
+export type PostMeta = {
+  meta_value: string;
+  attached: {
+    guid: string;
+    post_content: string;
+    post_title: string;
+    post_excerpt: string;
+    post_meta: {
+      meta_value: string;
+    }[];
+  }[];
+};
+
 export type Post = {
-  ID: bigint;
+  __typename: "wplf_posts";
+  ID: number; // Changed from bigint to number for simplicity
   post_name: string;
   post_title: string;
-  post_date: Date;
-  post_modified: Date;
+  post_date: string; // Changed from Date to string to match your GraphQL result directly
+  post_modified: string; // Same as above
   post_content: string;
-  post_author: bigint;
-  wp_term_relationships: {
-    wp_term_taxonomy: {
-      wp_terms: {
-        name: string;
-        slug: string;
-      } | null;
-      description: string;
-      term_taxonomy_id: bigint;
-      term_id: bigint;
-      taxonomy: string;
-    } | null;
-    term_taxonomy_id: bigint;
-  }[];
-  // include any other properties you need
-} | null;
+  term_relationships: TermRelationship[];
+  user: User;
+  post_meta: PostMeta[];
+};
+
+export type QueryData = {
+  wplf_posts: Post[];
+};

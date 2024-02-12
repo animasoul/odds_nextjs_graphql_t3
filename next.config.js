@@ -12,6 +12,9 @@ const config = {
     },
   },
   poweredByHeader: false,
+  images: {
+    domains: ["www.learnonline.guide"],
+  },
 };
 
 export default config;
