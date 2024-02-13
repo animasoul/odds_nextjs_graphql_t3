@@ -131,8 +131,8 @@ function Showcase() {
                         )?.meta_value ?? "Post thumbnail"
                       }
                       fill={true}
-                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                      quality={75}
+                      sizes="(max-width: 768px) 90vw, (max-width: 1200px) 40vw, 25vw"
+                      quality={65}
                       className={styles.objectfit}
                     />
                   </div>
