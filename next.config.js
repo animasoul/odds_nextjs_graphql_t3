@@ -13,7 +13,14 @@ const config = {
   },
   poweredByHeader: false,
   images: {
-    domains: ["www.learnonline.guide"],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "www.learnonline.guide",
+        port: "",
+        pathname: "/wp-content/uploads/**",
+      },
+    ],
   },
 };
 

@@ -10,6 +10,7 @@ export const revalidate = 100;
 
 import { useSuspenseQuery } from "@apollo/experimental-nextjs-app-support/ssr";
 import { gql } from "@apollo/client";
+import Image from "next/image";
 
 const query = gql`
   query getPosts @cached {
@@ -122,13 +123,17 @@ function Showcase() {
                   </p>
                   {/* Since `attached` is an object, you don't need to map over it */}
                   <div className={styles.imagefit}>
-                    <img
+                    <Image
                       src={meta.attached.guid}
                       alt={
                         meta.attached.post_meta.find(
                           (metaItem) => metaItem.meta_value
                         )?.meta_value ?? "Post thumbnail"
                       }
+                      fill={true}
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                      quality={75}
+                      className={styles.objectfit}
                     />
                   </div>
                 </div>
